@@ -12,7 +12,7 @@ public class SignUpActivity extends AppCompatActivity {
             userEditText, passwordEditText;
     private String nameString, surnameString,
             userString, passwordString;
-
+    private static final String urlUpload = "http://swiftcodingthai.com/ssru/add_user_master.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,17 @@ public class SignUpActivity extends AppCompatActivity {
 
         } else {
             //No Space
+            uploadNewUser();
 
         }
 
 
     }   // clickSign
+
+    private void uploadNewUser() {
+
+
+
+    }   // uploadNewUser
 
 }   // Main Class
