@@ -1,7 +1,10 @@
 package appewtc.masterung.ssrushopbook;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -52,14 +55,39 @@ public class SignUpActivity extends AppCompatActivity {
             MyAlert myAlert = new MyAlert();
             myAlert.myDialog(this, "มีช่องว่าง", "กรุณากรอกทุกช่อง คะ");
 
+        } else if (checkUser()) {
+            //User ซ้ำ
+            MyAlert myAlert = new MyAlert();
+            myAlert.myDialog(this, "User ซ้ำ", "กรุณาเปลี่ยน User ใหม่ User ซ้ำ");
+
         } else {
-            //No Space
+
             uploadNewUser();
 
         }
 
 
     }   // clickSign
+
+    private boolean checkUser() {
+
+        try {
+
+            SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
+                    MODE_PRIVATE, null);
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM userTABLE WHERE User = " + "'" + userString + "'", null);
+            cursor.moveToFirst();
+
+            Log.d("31May", "Have " + cursor.getString(3));
+
+
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
 
     private void uploadNewUser() {
 
