@@ -72,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .add("Password", passwordString)
                 .build();
         Request.Builder builder = new Request.Builder();
-        Request request = builder.url("http://swiftcodingthai.com/ssru/add_user_master.php").post(requestBody).build();
+        Request request = builder.url(urlUpload).post(requestBody).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
