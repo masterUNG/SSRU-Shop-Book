@@ -12,6 +12,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     //Explicit
@@ -67,6 +70,20 @@ public class MainActivity extends AppCompatActivity {
             try {
 
                 Log.d("31May", "JSON ==> " + s);
+
+                JSONArray jsonArray = new JSONArray(s);
+                for (int i=0;i<jsonArray.length();i++) {
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String strName = jsonObject.getString(MyManage.column_name);
+                    String strSurname = jsonObject.getString(MyManage.column_surname);
+                    String strUser = jsonObject.getString(MyManage.column_user);
+                    String strPassword = jsonObject.getString(MyManage.column_password);
+                    String strMoney = jsonObject.getString(MyManage.column_money);
+
+                    myManage.addNewUser(strName, strSurname, strUser,
+                            strPassword, strMoney);
+                }   // for
 
 
             } catch (Exception e) {
