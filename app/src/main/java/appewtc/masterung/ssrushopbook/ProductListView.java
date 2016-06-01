@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -132,7 +133,7 @@ public class ProductListView extends AppCompatActivity {
 
                         if (checkMoney(priceStrings[i])) {
 
-                            confirmDialog(nameStrings[i], priceStrings[i]);
+                            confirmDialog(nameStrings[i], priceStrings[i], eBookStrings[i]);
 
                         } else {
 
@@ -166,7 +167,9 @@ public class ProductListView extends AppCompatActivity {
 
     }   // Syn Class
 
-    private void confirmDialog(String nameString, String priceString) {
+    private void confirmDialog(final String nameString,
+                               final String priceString,
+                               final String eBookString) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.drawable.icon_myaccount);
@@ -182,6 +185,13 @@ public class ProductListView extends AppCompatActivity {
         builder.setPositiveButton("Order", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                Intent intent = new Intent(ProductListView.this, ReadPDF.class);
+                intent.putExtra("Login", loginStrings);
+                intent.putExtra("NameBook", nameString);
+                intent.putExtra("PriceBook", priceString);
+                intent.putExtra("urlEbook", eBookString);
+                startActivity(intent);
 
                 dialogInterface.dismiss();
             }
