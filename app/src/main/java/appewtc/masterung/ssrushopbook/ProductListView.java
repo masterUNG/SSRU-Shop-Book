@@ -182,6 +182,7 @@ public class ProductListView extends AppCompatActivity {
         builder.setPositiveButton("Order", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
                 dialogInterface.dismiss();
             }
         });
