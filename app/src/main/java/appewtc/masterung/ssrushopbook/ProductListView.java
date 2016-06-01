@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -122,6 +124,24 @@ public class ProductListView extends AppCompatActivity {
                         priceStrings, coverStrings);
                 listView.setAdapter(myAdapter);
 
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        if (checkMoney(priceStrings[i])) {
+
+                            confirmDialog(nameStrings[i], priceStrings[i]);
+
+                        } else {
+
+                            MyAlert myAlert = new MyAlert();
+                            myAlert.myDialog(context, "เงินไม่พอ", "กรุณาเลือกเล่มใหม่ เงินไม่พอ");
+
+                        }
+
+                    }   // onItemClick
+                });
+
             } catch (Exception e) {
                 Log.d("1JuneV2", "onPost e ==> " + e.toString());
             }
@@ -129,7 +149,24 @@ public class ProductListView extends AppCompatActivity {
 
         }   // onPost
 
+        private boolean checkMoney(String priceString) {
+
+            int intMyMoney = Integer.parseInt(loginStrings[5]);
+            int intPrice = Integer.parseInt(priceString);
+
+            if (intMyMoney >= intPrice) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
     }   // Syn Class
+
+    private void confirmDialog(String nameString, String priceString) {
+
+    }
 
 
 }   // Main Class
