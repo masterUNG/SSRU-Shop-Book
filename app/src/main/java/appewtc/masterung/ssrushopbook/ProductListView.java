@@ -35,6 +35,7 @@ public class ProductListView extends AppCompatActivity {
     private String[] loginStrings, nameStrings, priceStrings,
             coverStrings, eBookStrings;
     private String urlJSON = "http://swiftcodingthai.com/ssru/get_product.php";
+    private String moneyString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class ProductListView extends AppCompatActivity {
 
         //Receive Value From Intent
         loginStrings = getIntent().getStringArrayExtra("Login");
+        moneyString = loginStrings[5];
 
         //Show View
         nameTextView.setText(loginStrings[1]);
@@ -73,6 +75,8 @@ public class ProductListView extends AppCompatActivity {
 
     private class SynUserTABLE extends AsyncTask<Void, Void, String> {
 
+        private String myResult = null;
+
         @Override
         protected String doInBackground(Void... voids) {
 
@@ -95,7 +99,24 @@ public class ProductListView extends AppCompatActivity {
 
                     @Override
                     public void onResponse(Response response) throws IOException {
-                        Log.d("2JuneV1", "response ==> " + response.body().string());
+                       // Log.d("2JuneV1", "response ==> " + response.body().string());
+
+                        try {
+
+                            JSONArray jsonArray = new JSONArray(response.body().string());
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            moneyString = jsonObject.getString("Money");
+
+                            Log.d("2JuneV1", "moneyString ==> " + moneyString);
+
+                            moneyTextView.setText(moneyString + " THB.");
+
+
+                        } catch (Exception e) {
+                            Log.d("2JuneV1", "e ==> " + e.toString());
+                            e.printStackTrace();
+                        }
+
                     }
                 });
 
@@ -105,8 +126,13 @@ public class ProductListView extends AppCompatActivity {
                 return null;
             }
 
+
             return null;
+
         }   // doInBack
+
+
+
 
     }   // Syn Class
 
@@ -169,7 +195,7 @@ public class ProductListView extends AppCompatActivity {
                 coverStrings = new String[jsonArray.length()];
                 eBookStrings = new String[jsonArray.length()];
 
-                for (int i=0;i<jsonArray.length();i++) {
+                for (int i = 0; i < jsonArray.length(); i++) {
 
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -211,7 +237,7 @@ public class ProductListView extends AppCompatActivity {
 
         private boolean checkMoney(String priceString) {
 
-            int intMyMoney = Integer.parseInt(loginStrings[5]);
+            int intMyMoney = Integer.parseInt(moneyString);
             int intPrice = Integer.parseInt(priceString);
 
             if (intMyMoney >= intPrice) {
