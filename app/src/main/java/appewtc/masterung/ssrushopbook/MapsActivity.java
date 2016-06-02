@@ -37,6 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ImageView imageView;
     private TextView nameTextView;
     private TextView moneyTextView;
+    private double latADouble, lngADouble;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void upOrderToServer() {
 
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = new FormEncodingBuilder()
+                .add("isAdd", "true")
+                .add("Name", loginStrings[1])
+                .add("NameBook", nameBookString)
+                .add("Lat", Double.toString(latADouble))
+                .add("Lng", Double.toString(lngADouble))
+                .build();
+        Request.Builder builder = new Request.Builder();
+        Request request = builder.url("http://swiftcodingthai.com/ssru/add_order.php").post(requestBody).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+               // Toast.makeText(MapsActivity.this, "บันทึกเรียบร้อย", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
     }
 
 
@@ -137,6 +162,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     statusClick = false;
                 }
 
+                latADouble = latLng.latitude;
+                lngADouble = latLng.longitude;
 
                 mMap.clear();
 
