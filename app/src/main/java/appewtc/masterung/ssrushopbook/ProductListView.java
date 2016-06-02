@@ -274,6 +274,7 @@ public class ProductListView extends AppCompatActivity {
                 intent.putExtra("NameBook", nameString);
                 intent.putExtra("PriceBook", priceString);
                 intent.putExtra("urlEbook", eBookString);
+                intent.putExtra("Money", moneyString);
                 startActivity(intent);
 
                 dialogInterface.dismiss();

@@ -16,7 +16,7 @@ import java.io.IOException;
 public class ReadPDF extends AppCompatActivity {
 
     //Explicit
-    private String nameBookString, priceBookString, urlPDFString;
+    private String nameBookString, priceBookString, urlPDFString, moneyString;
     private String[] loginStrings;
     private String urlEdit = "http://swiftcodingthai.com/ssru/edit_money_master.php";
 
@@ -30,6 +30,7 @@ public class ReadPDF extends AppCompatActivity {
         priceBookString = getIntent().getStringExtra("PriceBook");
         urlPDFString = getIntent().getStringExtra("urlEbook");
         loginStrings = getIntent().getStringArrayExtra("Login");
+        moneyString = getIntent().getStringExtra("Money");
 
         //updateAccount
         updateAccount();
@@ -38,7 +39,7 @@ public class ReadPDF extends AppCompatActivity {
 
     private void updateAccount() {
 
-        int intCurrentMoney = Integer.parseInt(loginStrings[5]);
+        int intCurrentMoney = Integer.parseInt(moneyString);
         int intPriceBook = Integer.parseInt(priceBookString);
         int intMyMoney = intCurrentMoney - intPriceBook;
 
