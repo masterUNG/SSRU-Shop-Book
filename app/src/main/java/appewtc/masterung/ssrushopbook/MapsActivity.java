@@ -30,7 +30,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.my_layout);
 
         //Get Value From Intent
         nameBookString = getIntent().getStringExtra("NameBook");
@@ -68,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                
+
             }
 
             @Override
