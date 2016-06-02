@@ -269,7 +269,7 @@ public class ProductListView extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                Intent intent = new Intent(ProductListView.this, ReadPDF.class);
+                Intent intent = new Intent(ProductListView.this, MapsActivity.class);
                 intent.putExtra("Login", loginStrings);
                 intent.putExtra("NameBook", nameString);
                 intent.putExtra("PriceBook", priceString);
