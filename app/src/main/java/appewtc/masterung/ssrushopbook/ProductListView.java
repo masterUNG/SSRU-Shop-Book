@@ -14,12 +14,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class ProductListView extends AppCompatActivity {
 
@@ -53,6 +59,57 @@ public class ProductListView extends AppCompatActivity {
         synchronizeProduct.execute();
 
     }   // Main Method
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.d("2JuneV1", "onRestart Work");
+
+        SynUserTABLE synUserTABLE = new SynUserTABLE();
+        synUserTABLE.execute();
+
+    }
+
+    private class SynUserTABLE extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+
+                OkHttpClient okHttpClient = new OkHttpClient();
+                RequestBody requestBody = new FormEncodingBuilder()
+                        .add("isAdd", "true")
+                        .add("User", loginStrings[3])
+                        .build();
+                Request.Builder builder = new Request.Builder();
+                Request request = builder.url("http://swiftcodingthai.com/ssru/get_user_where.php")
+                        .post(requestBody).build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        Log.d("2JuneV1", "response ==> " + response.body().string());
+                    }
+                });
+
+
+            } catch (Exception e) {
+                Log.d("2JuneV1", "doIn Error ==> " + e.toString());
+                return null;
+            }
+
+            return null;
+        }   // doInBack
+
+    }   // Syn Class
+
 
     private class SynchronizeProduct extends AsyncTask<Void, Void, String> {
 
