@@ -216,7 +216,10 @@ public class ProductListView extends AppCompatActivity {
 
                         if (checkMoney(priceStrings[i])) {
 
-                            confirmDialog(nameStrings[i], priceStrings[i], eBookStrings[i]);
+                            confirmDialog(nameStrings[i],
+                                    priceStrings[i],
+                                    eBookStrings[i],
+                                    coverStrings[i]);
 
                         } else {
 
@@ -252,7 +255,8 @@ public class ProductListView extends AppCompatActivity {
 
     private void confirmDialog(final String nameString,
                                final String priceString,
-                               final String eBookString) {
+                               final String eBookString,
+                               final String imageBook) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.drawable.icon_myaccount);
@@ -275,6 +279,7 @@ public class ProductListView extends AppCompatActivity {
                 intent.putExtra("PriceBook", priceString);
                 intent.putExtra("urlEbook", eBookString);
                 intent.putExtra("Money", moneyString);
+                intent.putExtra("ImageBook", imageBook);
                 startActivity(intent);
 
                 dialogInterface.dismiss();
